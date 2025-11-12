@@ -20,7 +20,9 @@ It allows users to convert multiple image files from various formats into a sing
 
 To build or run the project from source, ensure the following dependencies are installed:
 
+```shell
 pip install pillow pyqt6
+```
 
 
 Python 3.10 or newer is recommended for building the executable.
@@ -32,7 +34,7 @@ Python 3.10 or newer is recommended for building the executable.
 After building or downloading the compiled binary, make sure `imgc` is in your system path.
 
 If running from source, clone the repository and build it (for example, using PyInstaller):
-```
+```shell
 git clone https://github.com/wegorz9/imgc.git
 cd imgc
 pyinstaller --onefile imgc.py
@@ -74,9 +76,9 @@ imgc [desired format] [-o <output_directory>] [-f <filter>] [-d]
 ## Graphical User Interface (GUI)
 
 You can start the graphical interface with:
-
+```shell
 imgc gui
-
+```
 
 ### GUI Features
 
@@ -110,13 +112,13 @@ PCX, PIXAR, PNG, PPM, PSD, SGI, SPIDER, SUN, TGA, TIFF, WEBP, WMF, XBM, XPM
 ## Building the Executable
 
 You can compile `imgc` into a standalone executable using **PyInstaller**:
-
+```shell
 pyinstaller --onefile imgc.py
-
+```
 
 This will create a binary under `dist/imgc` that can be run from the command line:
 
-```
+```shell
 imgc help
 ```
 
