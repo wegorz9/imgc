@@ -30,7 +30,7 @@ USAGE:
     imgc gui
         Open a GUI
 
-    imgc [desired format] [-o <output_directory>] [-f <filter>] [-d]
+    imgc [desired format] [-o <output_directory>] [-f <filter>] [-d] [-t <size_x,size_y>]
         Convert all matching images in the current directory (and optionally 
         subdirectories, if supported) to the specified format.
 
@@ -50,6 +50,10 @@ OPTIONS:
 
     -d
         Delete original images after successful conversion.
+    
+    -t <size_x,size_y>
+        Transform the images to a desired size.
+        Example: -t 256,256
 
 EXAMPLES:
     imgc help
@@ -66,6 +70,9 @@ EXAMPLES:
 
     imgc png -o converted
         Convert all supported images to .png and save them in the "converted" folder.
+    
+    imgc bmp -t 256,512
+        Convert all supported images to .bmp and resize them to 256 pixels by 512 pixels.
 
     imgc webp -f jpg,png -d
         Convert only .jpg and .png images to .webp, and delete the originals afterward.
@@ -89,6 +96,7 @@ NOTES:
         self.output_dir: str | os.path = "."
         self.filter: None | list = None
         self.delete: bool = False
+        self.transform: None | tuple(int, int) = None
 
         self.parse_args(argv)
 
@@ -112,6 +120,10 @@ NOTES:
                 args.remove(args[2])
             elif args[2] == "-d":
                 self.delete = True
+                args.remove(args[2])
+            elif args[2] == "-t":
+                self.transform = tuple(map(int, args[3].split(",")))
+                args.remove(args[3])
                 args.remove(args[2])
             else:
                 print("Invalid arguments supplied.")
@@ -155,6 +167,8 @@ NOTES:
             if ext != self.format.lower():
                 try:
                     with Image.open(file_name) as fp:
+                        if self.transform is not None:
+                            fp = fp.resize(self.transform, Image.Resampling.BOX)
                         fp.save(os.path.join(self.output_dir, os.path.basename(fn) + "." + self.format.lower()))
                     if self.delete:
                         os.remove(file_name)
