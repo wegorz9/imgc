@@ -52,7 +52,7 @@ OPTIONS:
         Delete original images after successful conversion.
     
     -t <size_x,size_y>
-        Transform the images to a desired size.
+        Resize the images to a desired size.
         Example: -t 256,256
 
 EXAMPLES:
