@@ -94,9 +94,9 @@ NOTES:
         self.format: str = ""
 
         self.output_dir: str | os.path = "."
-        self.filter: None | list = None
+        self.filter: None | list[str] = None
         self.delete: bool = False
-        self.transform: None | tuple(int, int) = None
+        self.transform: None | tuple[int, int] = None
 
         self.parse_args(argv)
 
@@ -237,6 +237,10 @@ class ImgGUI(QtWidgets.QMainWindow):
         self.parent_object.format = self.ui.formatEdit.text()
         self.parent_object.delete = self.ui.deleteChackBox.isChecked()
         self.parent_object.output_dir = self.ui.pathEdit.text()
+        size = [int(self.ui.spinBoxX.value()), int(self.ui.spinBoxY.value())]
+        if size[0] == 0 or size[1] == 0:
+            size = None
+        self.parent_object.transform = size
 
         self.parent_object.convert()
 
